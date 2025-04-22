@@ -1,7 +1,7 @@
 /******************************************************************
  *
  *   YOUR NAME / SECTION NUMBER
- *
+ *    Salvador Ayon / COMP 272 002
  *   Note, additional comments provided throughout this source code
  *   is for educational purposes
  *
@@ -105,6 +105,32 @@ public class Graph {
   public int findRoot() {
 
     // ADD YOUR CODE HERE - DO NOT FORGET TO ADD YOUR NAME/SECTION AT TOP OF FILE
-    return -1;
+    int[] inDegree = new int[numVertices];
+
+    // Step 1: Calculate in-degrees
+    for (int i = 0; i < numVertices; i++) {
+      LinkedList<Integer> neighbors = adjListArr[i];
+      for (int j = 0; j < neighbors.size(); j++) {
+        int neighbor = neighbors.get(j);
+        inDegree[neighbor]++;
+      }
+    }
+
+    // Step 2: Look for vertex with in-degree 0
+    int rootIndex = -1;
+    for (int i = 0; i < numVertices; i++) {
+      if (inDegree[i] == 0) {
+        if (rootIndex == -1) {
+          rootIndex = i; // First candidate root
+        } else {
+          return -1; // More than one root found
+        }
+      }
+    }
+
+    // Step 3: Return value if one root found, else -1
+    return (rootIndex != -1) ? vertexValues.get(rootIndex) : -1;
+  }
+//    return -1;
   } 
-}
+
